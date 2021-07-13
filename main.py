@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import filedialog
+import shutil
 
 def load_xl():
     filename = filedialog.askopenfilename(initialdir="/", title="Select file", filetypes=(("Excel files", "*.xlsx"), ("all files", "*.*")))
