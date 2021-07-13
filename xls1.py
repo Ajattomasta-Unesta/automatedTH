@@ -5,6 +5,7 @@ wb = load_workbook("xl.xlsx", data_only=True)
 #load_ws = load_wb['Sheet1']
 
 ws = wb[wb.sheetnames[0]]
+commonrail = []
 
 print("A")
 all_values = []
@@ -25,6 +26,7 @@ print(all_values[3][:5])
 #L3-LIST
 l3_values = []
 for row in ws.iter_rows(min_row=6):
+    if row[0].value == None : break
     row_value = []
     for cell in row[0:3]:
         row_value.append(cell.value)
