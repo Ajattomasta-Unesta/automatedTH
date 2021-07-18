@@ -15,13 +15,23 @@ except : pass'''
 
 
 #파일이름지정가능 미입력시 기존처럼 자동
+import time
 from tkinter import *
 from tkinter import filedialog
 
 from sys import exit
 from getmac import get_mac_address
-def funcc() :
-    print(stv_fn.get())
+def funcc(filename) :
+    path = "PATH"
+    if filename.isspace():
+        now = time.localtime()
+        tm = "%04d-%02d-%02d-%02d-%02d-%02d" % (
+        now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
+        filepath = path + "/경비원배치폐지신고서_" + tm + ".hwp"
+    else:
+        filepath = path + "/" + filename + ".hwp"
+
+    print(filepath)
 if __name__ == "__main__":
 
     ###################CERT####################
@@ -35,7 +45,7 @@ if __name__ == "__main__":
 
     ff.close()
     ###################CERT####################
-
+    funcc("     ")
     root = Tk()
     root.title("경비원 배치폐지신고서 자동생성")
 
@@ -63,8 +73,8 @@ if __name__ == "__main__":
     sheetname = Entry(root, text="Sheet1", textvariable=stv_fn)
     sheetname.grid(row=3, column=1, padx=25, pady=25)
 
-    btn_st = Button(root, text="생성 시작")
+    btn_st = Button(root, text="생성 시작", command=funcc)
     btn_st.grid(row=3, column=2, padx=25, pady=25)
 
     root.mainloop()
-    funcc()
+

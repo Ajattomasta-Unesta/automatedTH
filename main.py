@@ -1,11 +1,11 @@
 import time
 from tkinter import *
 from tkinter import filedialog
-import shutil
+from shutil import copyfile
 import math
 from openpyxl import load_workbook
 import win32com.client as win32
-import pyperclip
+from pyperclip import copy
 from sys import exit
 from getmac import get_mac_address
 
@@ -67,17 +67,22 @@ def load_data(filepath) :
     print(L2[3].date())
     return pddata, ppdata
 
-def inputhwp(path, pddata, ppdata) :
+def inputhwp(path, pddata, ppdata, filename) :
     hwp = win32.Dispatch("HWPFrame.HwpObject")
 
     #hwp.RegisterModule("FilePathCheckDLL", "FilePathCheckerModule")
     hwp.XHwpWindows.Item(0).Visible = True
 
-    now = time.localtime()
-    tm = "%04d-%02d-%02d-%02d-%02d-%02d" % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
-    filepath = path+"/경비원배치폐지신고서_"+tm+".hwp"
+    if filename.isspace() :
+        now = time.localtime()
+        tm = "%04d-%02d-%02d-%02d-%02d-%02d" % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
+        filepath = path + "/경비원배치폐지신고서_" + tm + ".hwp"
+    else : filepath = path + "/" + filename + ".hwp"
 
-    shutil.copyfile("form1.hwp", filepath)
+    print(filepath)
+    #filepath = path+"/경비원배치폐지신고서_"+tm+".hwp"
+
+    copyfile("form1.hwp", filepath) #shutil
 
     hwp.Open(filepath, "HWP", "forceopen:true")
     '''hwp.PutFieldText("x1", "  ")
@@ -165,9 +170,9 @@ def execv():
     pd, pp = load_data(stv_xl.get())
     print("PP : ", pp)
     print("PD : ", pd)
-    inputhwp(stv_ph.get(), pd, pp)
+    inputhwp(stv_ph.get(), pd, pp, stv_fn.get())
 
-    pyperclip.copy("")
+    copy("")
 
 if __name__ == "__main__":
 
