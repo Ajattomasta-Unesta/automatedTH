@@ -1,3 +1,4 @@
+import base64
 import time
 from tkinter import *
 from tkinter import filedialog
@@ -179,7 +180,7 @@ if __name__ == "__main__":
     ###################CERT####################
     try:
         ff = open("moonlight.dat", "r")
-        if ff.read() == get_mac_address():
+        if base64.b64decode(ff.read()).decode('ascii') == get_mac_address():
             print("VABENE")
         else:
             raise Exception

@@ -15,6 +15,7 @@ except : pass'''
 
 
 #파일이름지정가능 미입력시 기존처럼 자동
+import base64
 import time
 from tkinter import *
 from tkinter import filedialog
@@ -36,8 +37,8 @@ if __name__ == "__main__":
 
     ###################CERT####################
     try:
-        ff = open("moonlight.dat", "r")
-        if ff.read() == get_mac_address():
+        ff = open("moonlight.dat", "rb")
+        if base64.b64decode(ff.read()).decode('ascii') == get_mac_address():
             print("VABENE")
         else: raise Exception
     except:
